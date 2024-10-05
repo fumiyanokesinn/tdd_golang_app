@@ -1,0 +1,32 @@
+version: "3"
+services:
+  # db:
+  #   image: mysql:latest
+  #   container_name: mysql
+  #   ports:
+  #     - 3306:3306
+  #   environment:
+  #     DB_HOST: db
+  #     MYSQL_DATABASE: chat_db # データベース名
+  #     MYSQL_ROOT_PASSWORD: root
+  #     TZ: Asia/Tokyo
+  #   volumes:
+  #     - ./data:/var/lib/mysql
+  #     - ./my.cnf:/etc/mysql/conf.d/my.cnf
+  #     - ./initdb:/docker-entrypoint-initdb.d  # 初期化スクリプトディレクトリ
+  #   healthcheck: # <- ここ
+  #     test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+  #     timeout: 20s
+  #     retries: 10
+  golang:
+    container_name: tdd_golang
+    build: ./app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/go/src/app
+    working_dir: /go/src/app
+    tty: true
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
